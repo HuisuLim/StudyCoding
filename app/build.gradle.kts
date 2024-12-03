@@ -1,7 +1,13 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
 }
-
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localProperties.load(localPropertiesFile.inputStream())
+}
 android {
     namespace = "com.example.StudyCoding"
     compileSdk = 34
@@ -14,6 +20,18 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        // BuildConfig에 정의 (코드에서 사용)
+        // BuildConfig에 judgeO_api_key 추가
+        buildConfigField(
+            "String",
+            "JUDGE0_API_KEY",
+            localProperties["judgeO_api_key"]?.toString() ?: "\"\""
+        )
+
+    }
+
+    buildFeatures {
+        buildConfig = true // BuildConfig 사용 활성화
     }
 
     buildTypes {
