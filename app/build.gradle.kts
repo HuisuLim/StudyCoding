@@ -25,7 +25,21 @@ android {
         buildConfigField(
             "String",
             "JUDGE0_API_KEY",
-            localProperties["judgeO_api_key"]?.toString() ?: "\"\""
+            localProperties["judge0_api_key"]?.toString() ?: "\"\""
+        )
+
+        // BuildConfig에 BrowseAI API Key 추가
+        buildConfigField(
+            "String",
+            "BROWSEAI_API_KEY",
+            localProperties["browseai_api_key"]?.toString() ?: "\"\""
+        )
+
+        // 로봇 ID를 BuildConfig에 추가
+        buildConfigField(
+            "String",
+            "BROWSEAI_ROBOT_ID",
+            localProperties["browseai_robot_id"]?.toString() ?: "\"\""
         )
 
     }
