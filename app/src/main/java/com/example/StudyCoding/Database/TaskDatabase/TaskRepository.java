@@ -1,4 +1,4 @@
-package com.example.StudyCoding.Database;
+package com.example.StudyCoding.Database.TaskDatabase;
 
 import android.content.ContentValues;
 import android.content.Context;
