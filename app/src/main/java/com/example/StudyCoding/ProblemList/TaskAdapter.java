@@ -44,6 +44,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         holder.titleTextView.setText(task.getTitle());
         holder.urlTextView.setText(task.getUrl());
         holder.actionButton.setText("Open");
+        holder.problemNumberView.setText(task.getProblemNumber());
+
 
         holder.actionButton.setOnClickListener(v -> listener.onTaskClick(task.getUrl()));
     }
@@ -56,6 +58,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     public static class TaskViewHolder extends RecyclerView.ViewHolder {
         TextView titleTextView;
         TextView urlTextView;
+        TextView problemNumberView;
         Button actionButton;
 
         public TaskViewHolder(@NonNull View itemView) {
@@ -63,6 +66,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             titleTextView = itemView.findViewById(R.id.titleTextView);
             urlTextView = itemView.findViewById(R.id.urlTextView);
             actionButton = itemView.findViewById(R.id.actionButton);
+            problemNumberView = itemView.findViewById(R.id.problemNumber);
         }
     }
 }
