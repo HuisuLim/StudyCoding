@@ -1,4 +1,4 @@
-package com.example.StudyCoding.ProblemList;
+package com.example.StudyCoding.Fragment.Adapter;
 
 import android.graphics.Rect;
 import android.view.View;

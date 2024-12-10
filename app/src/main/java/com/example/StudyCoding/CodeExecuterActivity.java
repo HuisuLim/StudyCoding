@@ -6,9 +6,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -17,9 +15,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.fragment.app.Fragment;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.StudyCoding.API.Judge0_API;
 import com.example.StudyCoding.Database.CodeDatabase.CodeDatabaseHelper;
@@ -43,8 +40,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
-public class CodeExecuterFragment extends Fragment {
+public class CodeExecuterActivity extends AppCompatActivity {
     private static final String TAG = "Judge0";
     private Judge0_API api;
 
@@ -60,42 +56,82 @@ public class CodeExecuterFragment extends Fragment {
     private CodeRepository repository;
     private int selectedLanguageId = -1;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        CodeProcessor.init(requireContext());
-        View rootView = inflater.inflate(R.layout.code_executer, container, false);
-        String url = getArguments().getString("url");
-        repository = new CodeRepository(requireContext());
-        codeTask = new CodeTask(requireContext());
-        // Retrofit API 초기화
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        CodeProcessor.init(this);
+        setContentView(R.layout.code_executer);
+
+        repository = new CodeRepository(this);
+        codeTask = new CodeTask(this);
         api = RetrofitClient.getInstance().create(Judge0_API.class);
-
+        // URL 받기
+        String url = getIntent().getStringExtra("url");
         // UI 요소 초기화
-        codeInput = rootView.findViewById(R.id.codeInput);
-        codeView = rootView.findViewById(R.id.codeView);
-        input = rootView.findViewById(R.id.yourInput);
-        outputTextView = rootView.findViewById(R.id.outputTextView);
-        languageSpinner = rootView.findViewById(R.id.languageSpinner);
-        confirmButton = rootView.findViewById(R.id.confirmButton);
-        saveButton = rootView.findViewById(R.id.saveButton);
-
-        // URL 데이터를 기반으로 Code와 Spinner 초기화
+        codeInput = findViewById(R.id.codeInput);
+        codeView = findViewById(R.id.codeView);
+        input = findViewById(R.id.yourInput);
+        outputTextView = findViewById(R.id.outputTextView);
+        languageSpinner = findViewById(R.id.languageSpinner);
+        confirmButton = findViewById(R.id.confirmButton);
+        saveButton = findViewById(R.id.saveButton);
         initializeCodeInput(url);
-
-
         saveButton.setOnClickListener(v -> {
-            String userCode = codeInput.getText().toString().trim();
-            if (url != null && !userCode.isEmpty() && selectedLanguageId != -1) {
-                repository.upsertCodeSubmission(url, userCode, selectedLanguageId);
-                Toast.makeText(requireContext(), "Code saved successfully", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(requireContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
-            }
+            // 팝업창 생성
+            AlertDialog.Builder builder = new AlertDialog.Builder(CodeExecuterActivity.this);
+            builder.setTitle("Save Code");
+
+            // 팝업창에 EditText 추가
+            final EditText titleInput = new EditText(CodeExecuterActivity.this);
+            titleInput.setHint("Enter title");
+            builder.setView(titleInput);
+
+            // AlertDialog 생성
+            AlertDialog dialog = builder.create();
+
+            // "Save" 버튼 설정
+            dialog.setButton(AlertDialog.BUTTON_POSITIVE, "Save", (d, which) -> {
+                // 이 부분은 커스텀 버튼 동작으로 대체됩니다.
+            });
+
+            // "Cancel" 버튼 설정
+            dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel", (d, which) -> dialog.dismiss());
+
+            // 다이얼로그 표시 후 버튼 동작 커스터마이징
+            dialog.show();
+
+            // 커스텀 "Save" 버튼 동작 설정
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v1 -> {
+                String title = titleInput.getText().toString().trim();
+                String userCode = codeInput.getText().toString().trim();
+
+                if (TextUtils.isEmpty(title)) {
+                    Toast.makeText(CodeExecuterActivity.this, "Title is required", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (TextUtils.isEmpty(userCode) || selectedLanguageId == -1) {
+                    Toast.makeText(CodeExecuterActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // "사용자정의/" + 입력 제목으로 매핑
+                String formattedTitle = "사용자정의/" + title;
+
+                // 중복 검사
+                if (repository.doesTitleExist(formattedTitle)) {
+                    Toast.makeText(CodeExecuterActivity.this, "The title already exists. Please use a different title.", Toast.LENGTH_SHORT).show();
+                } else {
+                    // 저장 로직
+                    repository.upsertCodeSubmission(formattedTitle, userCode, selectedLanguageId);
+                    Toast.makeText(CodeExecuterActivity.this, "Code saved successfully with title: " + formattedTitle, Toast.LENGTH_SHORT).show();
+                    dialog.dismiss(); // 성공적으로 저장되면 창 닫기
+                }
+            });
         });
 
 
-        // EditText의 입력 이벤트 감지
+
         codeInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -120,11 +156,9 @@ public class CodeExecuterFragment extends Fragment {
             }
         });
 
-        // 언어 목록 불러오기
         Log.d(TAG, "Fetching language list...");
         fetchLanguages(url);
 
-        // 버튼 클릭 이벤트 설정
         confirmButton.setOnClickListener(v -> {
             String userInput = input.getText().toString().trim();
             String userCode = codeInput.getText().toString().trim();
@@ -133,8 +167,6 @@ public class CodeExecuterFragment extends Fragment {
             Log.d(TAG, "Selected Language ID: " + selectedLanguageId);
             createSubmission(userCode, selectedLanguageId, userInput, "100");
         });
-
-        return rootView;
     }
 
     private void fetchLanguages(String url) {
@@ -145,19 +177,17 @@ public class CodeExecuterFragment extends Fragment {
                     languages = response.body();
                     Log.d(TAG, "Languages Fetched: " + languages.size());
                     setupSpinner();
-                    // URL 데이터를 기반으로 Code와 Spinner 초기화
                     initializeSpinner(url);
-
                 } else {
                     Log.e(TAG, "Failed to load languages. Error code: " + response.code());
-                    Toast.makeText(requireContext(), "Failed to load languages", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CodeExecuterActivity.this, "Failed to load languages", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Language>> call, Throwable t) {
                 Log.e(TAG, "Error Fetching Languages: " + t.getMessage());
-                Toast.makeText(requireContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(CodeExecuterActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -169,7 +199,7 @@ public class CodeExecuterFragment extends Fragment {
         }
         Log.d(TAG, "Setting up spinner with languages: " + languageNames);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, languageNames);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, languageNames);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         languageSpinner.setAdapter(adapter);
 
@@ -236,26 +266,12 @@ public class CodeExecuterFragment extends Fragment {
         });
     }
 
-    private final TextWatcher textWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            String escapedCode = TextUtils.htmlEncode(s.toString());
-            codeView.setCode(escapedCode);
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-        }
-    };
-
-
     private void initializeCodeInput(String url) {
+        codeView.setOptions(Options.Default.get(this)
+                .withLanguage("java")
+                .withTheme(ColorTheme.MONOKAI));
         if (url == null) {
-            codeView.setOptions(Options.Default.get(requireContext())
+            codeView.setOptions(Options.Default.get(this)
                     .withLanguage("java")
                     .withTheme(ColorTheme.MONOKAI));
             return;
@@ -264,24 +280,17 @@ public class CodeExecuterFragment extends Fragment {
         Cursor cursor = repository.getCodeSubmissionByUrl(url);
         if (cursor.moveToFirst()) {
             String existingCode = cursor.getString(cursor.getColumnIndexOrThrow(CodeDatabaseHelper.COLUMN_CODE_INPUT));
-            codeInput.removeTextChangedListener(textWatcher);
-            // Code Input 초기화
             codeInput.setText(existingCode);
-            // CodeView 초기화 (post로 타이밍 보장)
             codeView.post(() -> {
-                // Code 설정과 함께 테마 강제 적용
                 codeView.setCode(existingCode);
-                codeView.setOptions(Options.Default.get(requireContext())
+                codeView.setOptions(Options.Default.get(this)
                         .withCode(existingCode)
                         .withLanguage("java")
                         .withTheme(ColorTheme.MONOKAI));
             });
-
-            codeInput.addTextChangedListener(textWatcher);
         }
         cursor.close();
     }
-
 
     private void initializeSpinner(String url) {
         if (url == null || languages.isEmpty()) return;
@@ -290,22 +299,17 @@ public class CodeExecuterFragment extends Fragment {
         if (cursor.moveToFirst()) {
             int existingLanguageId = cursor.getInt(cursor.getColumnIndexOrThrow(CodeDatabaseHelper.COLUMN_LANGUAGE_ID));
 
-            // Spinner 초기화 (해당 언어 ID를 찾아 선택)
             for (int i = 0; i < languages.size(); i++) {
                 if (languages.get(i).getId() == existingLanguageId) {
                     languageSpinner.setSelection(i);
                     break;
                 }
             }
-            Toast.makeText(requireContext(), "Spinner set for URL.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Spinner set for URL.", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(requireContext(), "No saved language for URL.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No saved language for URL.", Toast.LENGTH_SHORT).show();
         }
         cursor.close();
     }
-
-
-
-
 
 }

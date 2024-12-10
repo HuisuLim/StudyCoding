@@ -93,4 +93,27 @@ public class CodeRepository {
                 null  // 정렬 없음
         );
     }
+    public Cursor getMissingUrlCodeSubmissions() {
+        String query = "SELECT * FROM " + CodeDatabaseHelper.TABLE_NAME +
+                " WHERE " + CodeDatabaseHelper.COLUMN_URL + " IS NULL OR " +
+                CodeDatabaseHelper.COLUMN_URL + " = ''";
+        return db.rawQuery(query, null);
+    }
+
+    public boolean doesTitleExist(String title) {
+        // 제목 중복 여부 확인
+        String query = "SELECT COUNT(*) FROM " + CodeDatabaseHelper.TABLE_NAME +
+                " WHERE " + CodeDatabaseHelper.COLUMN_URL + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{title});
+        boolean exists = false;
+        if (cursor.moveToFirst()) {
+            exists = cursor.getInt(0) > 0;
+        }
+        cursor.close();
+        return exists;
+    }
+
+
+
+
 }

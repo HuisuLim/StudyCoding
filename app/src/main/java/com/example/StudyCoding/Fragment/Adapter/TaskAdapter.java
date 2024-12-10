@@ -1,4 +1,4 @@
-package com.example.StudyCoding.ProblemList;
+package com.example.StudyCoding.Fragment.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

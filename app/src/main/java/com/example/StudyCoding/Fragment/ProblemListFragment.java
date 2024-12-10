@@ -1,47 +1,55 @@
-package com.example.StudyCoding;
+package com.example.StudyCoding.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.StudyCoding.Database.TaskDatabase.Task;
 import com.example.StudyCoding.Database.TaskDatabase.TaskRepository;
-import com.example.StudyCoding.ProblemList.SpacingItemDecoration;
-import com.example.StudyCoding.ProblemList.TaskAdapter;
+import com.example.StudyCoding.ViewSelectedProblemWithCode;
+import com.example.StudyCoding.R;
+import com.example.StudyCoding.Fragment.Adapter.SpacingItemDecoration;
+import com.example.StudyCoding.Fragment.Adapter.TaskAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProblemListActivity extends AppCompatActivity implements TaskAdapter.OnTaskClickListener {
+public class ProblemListFragment extends Fragment implements TaskAdapter.OnTaskClickListener  {
 
     private RecyclerView recyclerView;
     private TaskAdapter adapter;
     private List<Task> taskList;
 
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_list);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_task_list, container, false);
 
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        // Add spacing between items
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.recycler_item_spacing);
         recyclerView.addItemDecoration(new SpacingItemDecoration(spacingInPixels));
 
         loadTasks();
 
-        adapter = new TaskAdapter(this, taskList, this);
+        adapter = new TaskAdapter(requireContext(), taskList, this);
         recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
+
+        return view;
     }
 
     private void loadTasks() {
-        TaskRepository repository = new TaskRepository(this);
+        TaskRepository repository = new TaskRepository(requireContext());
         taskList = new ArrayList<>();
         List<String> allTasks = repository.getAllTasks();
 
@@ -54,10 +62,9 @@ public class ProblemListActivity extends AppCompatActivity implements TaskAdapte
 
         repository.close();
     }
-
     @Override
     public void onTaskClick(String url) {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(requireContext(), ViewSelectedProblemWithCode.class);
         intent.putExtra("selected_url", url);
         startActivity(intent);
     }

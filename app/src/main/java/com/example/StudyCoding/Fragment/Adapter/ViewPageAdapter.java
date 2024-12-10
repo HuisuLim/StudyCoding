@@ -1,4 +1,4 @@
-package com.example.StudyCoding.ProblemList;
+package com.example.StudyCoding.Fragment.Adapter;
 
 import android.os.Bundle;
 
@@ -7,8 +7,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.StudyCoding.CodeExecuterFragment;
-import com.example.StudyCoding.ProblemViewFragment;
+import com.example.StudyCoding.Fragment.CodeExecuterFragment;
+import com.example.StudyCoding.Fragment.ProblemViewFragment;
 
 public class ViewPageAdapter extends FragmentStateAdapter {
 

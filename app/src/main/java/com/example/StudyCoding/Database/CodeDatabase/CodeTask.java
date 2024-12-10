@@ -3,6 +3,9 @@ package com.example.StudyCoding.Database.CodeDatabase;
 import android.content.Context;
 import android.database.Cursor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CodeTask {
     private CodeRepository repository;
 
@@ -10,6 +13,23 @@ public class CodeTask {
     public CodeTask(Context context) {
         this.repository = new CodeRepository(context);
     }
+    // CodeTask.java
+    public List<CodeTask> getAllCodeTasks() {
+        ensureRepositoryInitialized(); // repository 초기화 확인
+        List<CodeTask> codeTasks = new ArrayList<>();
+        Cursor cursor = repository.getAllCodeSubmissions();
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                String url = cursor.getString(cursor.getColumnIndexOrThrow(CodeDatabaseHelper.COLUMN_URL));
+                String codeInput = cursor.getString(cursor.getColumnIndexOrThrow(CodeDatabaseHelper.COLUMN_CODE_INPUT));
+                int languageId = cursor.getInt(cursor.getColumnIndexOrThrow(CodeDatabaseHelper.COLUMN_LANGUAGE_ID));
+                codeTasks.add(new CodeTask(url, codeInput, languageId));
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+        return codeTasks;
+    }
+
 
     // URL 데이터를 불러오는 메서드
     public CodeTask getCodeTaskByUrl(String url) {

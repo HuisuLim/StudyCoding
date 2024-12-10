@@ -5,9 +5,9 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.StudyCoding.ProblemList.ViewPageAdapter;
+import com.example.StudyCoding.Fragment.Adapter.ViewPageAdapter;
 
-public class MainActivity extends AppCompatActivity {
+public class ViewSelectedProblemWithCode extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
