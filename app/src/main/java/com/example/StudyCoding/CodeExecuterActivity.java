@@ -22,6 +22,9 @@ import com.example.StudyCoding.API.Judge0_API;
 import com.example.StudyCoding.Database.CodeDatabase.CodeDatabaseHelper;
 import com.example.StudyCoding.Database.CodeDatabase.CodeRepository;
 import com.example.StudyCoding.Database.CodeDatabase.CodeTask;
+import com.example.StudyCoding.LanguageRuleBook.ControlKeywordRule;
+import com.example.StudyCoding.LanguageRuleBook.CustomLanguageRuleBook;
+import com.example.StudyCoding.LanguageRuleBook.TypeKeywordRule;
 import com.example.StudyCoding.Models.Judge0Models.Language;
 import com.example.StudyCoding.Models.Judge0Models.SubmissionRequest;
 import com.example.StudyCoding.Models.Judge0Models.SubmissionResponse;
@@ -30,6 +33,8 @@ import com.example.StudyCoding.API.RetrofitClient;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.markusressel.kodeeditor.library.view.CodeEditorLayout;
+import de.markusressel.kodehighlighter.core.LanguageRuleBook;
 import io.github.kbiakov.codeview.CodeView;
 import io.github.kbiakov.codeview.adapters.Options;
 import io.github.kbiakov.codeview.classifier.CodeProcessor;
@@ -44,9 +49,8 @@ public class CodeExecuterActivity extends AppCompatActivity {
     private static final String TAG = "Judge0";
     private Judge0_API api;
 
-    private EditText codeInput;
-    private CodeView codeView;
     private EditText input;
+    private CodeEditorLayout codeEditorLayout;
     private TextView outputTextView;
     private Button confirmButton;
     private Button saveButton;
@@ -68,56 +72,48 @@ public class CodeExecuterActivity extends AppCompatActivity {
         // URL 받기
         String url = getIntent().getStringExtra("url");
         // UI 요소 초기화
-        codeInput = findViewById(R.id.codeInput);
-        codeView = findViewById(R.id.codeView);
         input = findViewById(R.id.yourInput);
         outputTextView = findViewById(R.id.outputTextView);
         languageSpinner = findViewById(R.id.languageSpinner);
         confirmButton = findViewById(R.id.confirmButton);
         saveButton = findViewById(R.id.saveButton);
+        codeEditorLayout = findViewById(R.id.codeEditorView);
+        LanguageRuleBook languageRuleBook2 = new CustomLanguageRuleBook(
+                new TypeKeywordRule(),
+                new ControlKeywordRule()
+        );
+        codeEditorLayout.setLanguageRuleBook(languageRuleBook2);
         initializeCodeInput(url);
         saveButton.setOnClickListener(v -> {
             // 팝업창 생성
             AlertDialog.Builder builder = new AlertDialog.Builder(CodeExecuterActivity.this);
             builder.setTitle("Save Code");
-
             // 팝업창에 EditText 추가
             final EditText titleInput = new EditText(CodeExecuterActivity.this);
             titleInput.setHint("Enter title");
             builder.setView(titleInput);
-
             // AlertDialog 생성
             AlertDialog dialog = builder.create();
-
             // "Save" 버튼 설정
             dialog.setButton(AlertDialog.BUTTON_POSITIVE, "Save", (d, which) -> {
-                // 이 부분은 커스텀 버튼 동작으로 대체됩니다.
             });
-
             // "Cancel" 버튼 설정
             dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel", (d, which) -> dialog.dismiss());
-
-            // 다이얼로그 표시 후 버튼 동작 커스터마이징
             dialog.show();
-
             // 커스텀 "Save" 버튼 동작 설정
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v1 -> {
                 String title = titleInput.getText().toString().trim();
-                String userCode = codeInput.getText().toString().trim();
-
+                String userCode = codeEditorLayout.getText().toString().trim();
                 if (TextUtils.isEmpty(title)) {
                     Toast.makeText(CodeExecuterActivity.this, "Title is required", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
                 if (TextUtils.isEmpty(userCode) || selectedLanguageId == -1) {
                     Toast.makeText(CodeExecuterActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
                 // "사용자정의/" + 입력 제목으로 매핑
                 String formattedTitle = "사용자정의/" + title;
-
                 // 중복 검사
                 if (repository.doesTitleExist(formattedTitle)) {
                     Toast.makeText(CodeExecuterActivity.this, "The title already exists. Please use a different title.", Toast.LENGTH_SHORT).show();
@@ -131,37 +127,12 @@ public class CodeExecuterActivity extends AppCompatActivity {
         });
 
 
-
-        codeInput.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String escapedCode = TextUtils.htmlEncode(s.toString());
-                Log.d(TAG, "User Typed Code: " + escapedCode);
-                codeView.setCode(escapedCode);
-                codeView.updateOptions(new Function1<Options, Unit>() {
-                    @Override
-                    public Unit invoke(Options options) {
-                        options.withCode(escapedCode).withLanguage("java").withTheme(ColorTheme.MONOKAI);
-                        return null;
-                    }
-                });
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
-
         Log.d(TAG, "Fetching language list...");
         fetchLanguages(url);
 
         confirmButton.setOnClickListener(v -> {
             String userInput = input.getText().toString().trim();
-            String userCode = codeInput.getText().toString().trim();
+            String userCode = codeEditorLayout.getText().toString().trim();
             Log.d(TAG, "Button Clicked. User Code: " + userCode);
             Log.d(TAG, "User Input: " + userInput);
             Log.d(TAG, "Selected Language ID: " + selectedLanguageId);
@@ -267,27 +238,14 @@ public class CodeExecuterActivity extends AppCompatActivity {
     }
 
     private void initializeCodeInput(String url) {
-        codeView.setOptions(Options.Default.get(this)
-                .withLanguage("java")
-                .withTheme(ColorTheme.MONOKAI));
         if (url == null) {
-            codeView.setOptions(Options.Default.get(this)
-                    .withLanguage("java")
-                    .withTheme(ColorTheme.MONOKAI));
             return;
         }
 
         Cursor cursor = repository.getCodeSubmissionByUrl(url);
         if (cursor.moveToFirst()) {
             String existingCode = cursor.getString(cursor.getColumnIndexOrThrow(CodeDatabaseHelper.COLUMN_CODE_INPUT));
-            codeInput.setText(existingCode);
-            codeView.post(() -> {
-                codeView.setCode(existingCode);
-                codeView.setOptions(Options.Default.get(this)
-                        .withCode(existingCode)
-                        .withLanguage("java")
-                        .withTheme(ColorTheme.MONOKAI));
-            });
+            codeEditorLayout.setText(existingCode);
         }
         cursor.close();
     }

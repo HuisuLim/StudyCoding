@@ -6,34 +6,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp"
         android:gravity="center">
 
-
-        <!-- 텍스트 입력 창 -->
-
-        <!-- 확인 버튼 -->
+        <!-- ConstraintLayout for Language and Spinner -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
 
             <TextView
                 android:id="@+id/languageTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
                 android:layout_marginEnd="8dp"
                 android:fontFamily="sans-serif-black"
                 android:text="Language"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/languageSpinner"
-                app:layout_constraintHorizontal_bias="0.935"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.448" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Spinner
                 android:id="@+id/languageSpinner"
@@ -42,41 +39,30 @@
                 android:minHeight="48dp"
                 android:padding="10dp"
                 android:spinnerMode="dropdown"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/languageTextView"
                 app:layout_constraintTop_toTopOf="parent" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-        <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
+
+        <!-- Code Editor Layout -->
+        <de.markusressel.kodeeditor.library.view.CodeEditorLayout
+            android:id="@+id/codeEditorView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="300dp"
+            android:layout_marginBottom="16dp"
+            app:ke_divider_enabled="true"
+            app:ke_editor_backgroundColor="#dddddd"
+            app:ke_lineNumbers_backgroundColor="#cccccc"
+            app:ke_lineNumbers_textColor="#000000" />
 
-            <EditText
-                android:id="@+id/codeInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:background="@android:drawable/edit_text"
-                android:gravity="top|start"
-                android:hint="코드를 입력하세요"
-                android:inputType="textMultiLine"
-                android:lines="21"
-                android:padding="10dp"
-                android:scrollbars="vertical" />
-
-            <io.github.kbiakov.codeview.CodeView
-                android:id="@+id/codeView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
+        <!-- Your Input Section -->
         <TextView
             android:id="@+id/inputView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-black"
             android:text="Your Input:" />
+
         <EditText
             android:id="@+id/yourInput"
             android:layout_width="match_parent"
@@ -87,35 +73,37 @@
             android:hint="코드를 입력하세요"
             android:inputType="textMultiLine"
             android:lines="1"
-            android:padding="10dp"
-            android:scrollbars="vertical" />
+            android:padding="10dp" />
 
-
+        <!-- Buttons and Output -->
         <Button
             android:id="@+id/confirmButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="확인"
-            android:padding="10dp" />
+            android:layout_marginBottom="16dp"
+            android:padding="10dp"
+            android:text="확인" />
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-black"
-            android:text="Your Output" />
+            android:text="Your Output"
+            android:layout_marginBottom="8dp" />
 
         <TextView
             android:id="@+id/outputTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="TextView"
+            android:layout_marginBottom="16dp" />
 
         <Button
             android:id="@+id/saveButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="saveButton" />
-
+            android:text="Save" />
     </LinearLayout>
+
 </ScrollView>

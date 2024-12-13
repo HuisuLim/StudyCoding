@@ -76,6 +76,11 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     implementation("androidx.viewpager2:viewpager2:1.0.0")
     implementation("com.android.support:recyclerview-v7:28.0.0")
+    implementation("com.github.markusressel:KodeEditor:v4.0.1")
+    implementation("com.otaliastudios:zoomlayout:1.9.0")
+    implementation("com.github.markusressel.KodeHighlighter:core:v4.0.3")
 
 
 }
+
+

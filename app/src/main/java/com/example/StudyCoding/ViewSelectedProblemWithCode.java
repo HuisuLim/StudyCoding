@@ -12,10 +12,8 @@ public class ViewSelectedProblemWithCode extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+        setContentView(R.layout.problem_with_code);
         String selectedUrl = getIntent().getStringExtra("selected_url");
-
         ViewPager2 viewPager = findViewById(R.id.viewPager);
         ViewPageAdapter adapter = new ViewPageAdapter(this, selectedUrl);
         viewPager.setAdapter(adapter);

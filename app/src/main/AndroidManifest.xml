@@ -25,7 +25,6 @@
         <!-- 추가 액티비티들 -->
         <activity android:name=".ViewSelectedProblemWithCode" android:exported="true" />
         <activity android:name=".CodeExecuterActivity" android:exported="true"/>
-
     </application>
 
 </manifest>

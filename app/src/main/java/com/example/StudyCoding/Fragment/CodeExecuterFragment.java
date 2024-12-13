@@ -25,6 +25,9 @@ import com.example.StudyCoding.API.Judge0_API;
 import com.example.StudyCoding.Database.CodeDatabase.CodeDatabaseHelper;
 import com.example.StudyCoding.Database.CodeDatabase.CodeRepository;
 import com.example.StudyCoding.Database.CodeDatabase.CodeTask;
+import com.example.StudyCoding.LanguageRuleBook.ControlKeywordRule;
+import com.example.StudyCoding.LanguageRuleBook.CustomLanguageRuleBook;
+import com.example.StudyCoding.LanguageRuleBook.TypeKeywordRule;
 import com.example.StudyCoding.Models.Judge0Models.Language;
 import com.example.StudyCoding.Models.Judge0Models.SubmissionRequest;
 import com.example.StudyCoding.Models.Judge0Models.SubmissionResponse;
@@ -34,6 +37,8 @@ import com.example.StudyCoding.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.markusressel.kodeeditor.library.view.CodeEditorLayout;
+import de.markusressel.kodehighlighter.core.LanguageRuleBook;
 import io.github.kbiakov.codeview.CodeView;
 import io.github.kbiakov.codeview.adapters.Options;
 import io.github.kbiakov.codeview.classifier.CodeProcessor;
@@ -49,7 +54,6 @@ public class CodeExecuterFragment extends Fragment {
     private static final String TAG = "Judge0";
     private Judge0_API api;
 
-    private EditText codeInput;
     private CodeView codeView;
     private EditText input;
     private TextView outputTextView;
@@ -60,6 +64,7 @@ public class CodeExecuterFragment extends Fragment {
     private List<Language> languages = new ArrayList<>();
     private CodeRepository repository;
     private int selectedLanguageId = -1;
+    private CodeEditorLayout codeEditorLayout;
 
     @Nullable
     @Override
@@ -69,24 +74,24 @@ public class CodeExecuterFragment extends Fragment {
         String url = getArguments().getString("url");
         repository = new CodeRepository(requireContext());
         codeTask = new CodeTask(requireContext());
-        // Retrofit API 초기화
         api = RetrofitClient.getInstance().create(Judge0_API.class);
 
         // UI 요소 초기화
-        codeInput = rootView.findViewById(R.id.codeInput);
-        codeView = rootView.findViewById(R.id.codeView);
         input = rootView.findViewById(R.id.yourInput);
         outputTextView = rootView.findViewById(R.id.outputTextView);
         languageSpinner = rootView.findViewById(R.id.languageSpinner);
         confirmButton = rootView.findViewById(R.id.confirmButton);
         saveButton = rootView.findViewById(R.id.saveButton);
-
+        codeEditorLayout = rootView.findViewById(R.id.codeEditorView);
+        LanguageRuleBook languageRuleBook2 = new CustomLanguageRuleBook(
+                new TypeKeywordRule(),
+                new ControlKeywordRule()
+        );
+        codeEditorLayout.setLanguageRuleBook(languageRuleBook2);
         // URL 데이터를 기반으로 Code와 Spinner 초기화
         initializeCodeInput(url);
-
-
         saveButton.setOnClickListener(v -> {
-            String userCode = codeInput.getText().toString().trim();
+            String userCode = codeEditorLayout.getText().toString().trim();
             if (url != null && !userCode.isEmpty() && selectedLanguageId != -1) {
                 repository.upsertCodeSubmission(url, userCode, selectedLanguageId);
                 Toast.makeText(requireContext(), "Code saved successfully", Toast.LENGTH_SHORT).show();
@@ -94,33 +99,6 @@ public class CodeExecuterFragment extends Fragment {
                 Toast.makeText(requireContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
             }
         });
-
-
-        // EditText의 입력 이벤트 감지
-        codeInput.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String escapedCode = TextUtils.htmlEncode(s.toString());
-                Log.d(TAG, "User Typed Code: " + escapedCode);
-                codeView.setCode(escapedCode);
-                codeView.updateOptions(new Function1<Options, Unit>() {
-                    @Override
-                    public Unit invoke(Options options) {
-                        options.withCode(escapedCode).withLanguage("java").withTheme(ColorTheme.MONOKAI);
-                        return null;
-                    }
-                });
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
-
         // 언어 목록 불러오기
         Log.d(TAG, "Fetching language list...");
         fetchLanguages(url);
@@ -128,7 +106,7 @@ public class CodeExecuterFragment extends Fragment {
         // 버튼 클릭 이벤트 설정
         confirmButton.setOnClickListener(v -> {
             String userInput = input.getText().toString().trim();
-            String userCode = codeInput.getText().toString().trim();
+            String userCode = codeEditorLayout.getText().toString().trim();
             Log.d(TAG, "Button Clicked. User Code: " + userCode);
             Log.d(TAG, "User Input: " + userInput);
             Log.d(TAG, "Selected Language ID: " + selectedLanguageId);
@@ -256,29 +234,15 @@ public class CodeExecuterFragment extends Fragment {
 
     private void initializeCodeInput(String url) {
         if (url == null) {
-            codeView.setOptions(Options.Default.get(requireContext())
-                    .withLanguage("java")
-                    .withTheme(ColorTheme.MONOKAI));
             return;
         }
 
         Cursor cursor = repository.getCodeSubmissionByUrl(url);
         if (cursor.moveToFirst()) {
             String existingCode = cursor.getString(cursor.getColumnIndexOrThrow(CodeDatabaseHelper.COLUMN_CODE_INPUT));
-            codeInput.removeTextChangedListener(textWatcher);
             // Code Input 초기화
-            codeInput.setText(existingCode);
+            codeEditorLayout.setText(existingCode);
             // CodeView 초기화 (post로 타이밍 보장)
-            codeView.post(() -> {
-                // Code 설정과 함께 테마 강제 적용
-                codeView.setCode(existingCode);
-                codeView.setOptions(Options.Default.get(requireContext())
-                        .withCode(existingCode)
-                        .withLanguage("java")
-                        .withTheme(ColorTheme.MONOKAI));
-            });
-
-            codeInput.addTextChangedListener(textWatcher);
         }
         cursor.close();
     }
