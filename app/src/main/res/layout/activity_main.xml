@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/back_color"
+    android:padding="25dp">
+    <TextView
+        android:id="@+id/TitleView"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Study Coding"
+        android:textColor="@color/white"
+        android:fontFamily="@font/noto_sans_thin"
+        android:textSize="70dp"/>
+
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+       android:gravity="center">
+       <ImageButton
+           android:id="@+id/codeButton"
+           android:layout_width="170dp"
+           android:layout_height="170dp"
+           android:background="@drawable/boarder_button"
+           android:padding="2dp"
+           android:layout_marginRight="15dp"
+           android:scaleType="centerCrop"
+           app:srcCompat="@drawable/button_main_coding" />
+       <ImageButton
+           android:id="@+id/searchButton"
+           android:scaleType="centerCrop"
+           android:padding="2dp"
+           android:layout_width="170dp"
+           android:layout_height="170dp"
+           app:srcCompat="@drawable/button_main_search"
+           android:background="@drawable/boarder_button_yellow"/>
+
+   </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingTop="15dp">
+
+        <ImageButton
+            android:id="@+id/ListButton"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:background="@drawable/boarder_button_green"
+            android:padding="9dp"
+            android:scaleType="centerCrop"
+            android:layout_marginRight="15dp"
+            app:srcCompat="@drawable/button_main_list" />
+
+        <ImageButton
+            android:id="@+id/terminateButton"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:background="@drawable/boarder_button_red"
+            android:padding="9dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/button_main_quit" />
+    </LinearLayout>
+
+
+
+</LinearLayout>

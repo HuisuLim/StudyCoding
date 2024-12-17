@@ -6,8 +6,8 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.StudyCoding.API.SolvedACAPI;
-import com.example.StudyCoding.Database.ProblemDatabase.ProblemRepository;
+import com.example.StudyCoding.API.API_SolvedAC;
+import com.example.StudyCoding.Database.Database_Problem.ProblemRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +37,7 @@ public class TestForSolvedAC extends AppCompatActivity {
     }
 
     public static class ApiService {
-        private final SolvedACAPI api;
+        private final API_SolvedAC api;
         private final ProblemRepository repository;
 
         public ApiService(Context context) {
@@ -46,7 +46,7 @@ public class TestForSolvedAC extends AppCompatActivity {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
-            api = retrofit.create(SolvedACAPI.class);
+            api = retrofit.create(API_SolvedAC.class);
             repository = new ProblemRepository(context);
         }
 

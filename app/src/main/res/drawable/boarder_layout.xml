@@ -4,7 +4,7 @@
     android:shape="rectangle">
 
     <!-- 내부 색 설정 -->
-    <solid android:color="#DDDDDD" />
+    <solid android:color="@color/front_color" />
 
     <!-- 각 모서리를 둥글게 -->
     <corners

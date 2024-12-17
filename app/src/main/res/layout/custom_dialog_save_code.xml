@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:clipToOutline="true"
+    android:background="@color/edit_text_color">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/boarder_dialog"
+    android:padding="10dp">
+    <!-- 제목 -->
+    <TextView
+        android:id="@+id/dialogTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/noto_sans_kr_thin"
+        android:text="Save Code"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/white" />
+
+    <!-- 입력 필드 -->
+    <EditText
+        android:id="@+id/codeTitleInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter title"
+        android:background="@drawable/boarder_edit_text"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/white" />
+
+    <!-- 버튼 레이아웃 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end"
+        android:layout_marginTop="10dp">
+
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="Cancel"
+            android:background="@drawable/boarder_button_red"
+            android:textColor="@color/white"
+            android:fontFamily="@font/noto_sans_kr_thin"/>
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/noto_sans_kr_thin"
+            android:background="@drawable/boarder_button"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</LinearLayout>
+</LinearLayout>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="customFontStyleLight">
+        <item name="android:fontFamily">@font/noto_sans_kr_light</item>
+    </style>
+    <style name="customFontStyleThin">
+        <item name="android:fontFamily">@font/noto_sans_kr_light</item>
+    </style>
+
+    <style name="TextColorTheme" parent="Theme.AppCompat.DayNight">
+        <!-- 기본 텍스트 색상을 흰색으로 -->
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:editTextColor">#FFFFFF</item>
+        <item name="android:fontFamily">@font/noto_sans_kr_light</item>
+        <!-- EditText 기본 텍스트 색상 또한 흰색 -->
+    </style>
+
+    <style name="TextColorThinTheme" parent="Theme.AppCompat.DayNight">
+        <!-- 기본 텍스트 색상을 흰색으로 -->
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:editTextColor">#FFFFFF</item>
+        <item name="android:fontFamily">@font/noto_sans_kr_thin</item>
+        <!-- EditText 기본 텍스트 색상 또한 흰색 -->
+    </style>
+
+    <style name="EditTextTheme" parent="Theme.AppCompat.DayNight">
+        <item name="android:editTextColor">#FFFFFF</item>
+    </style>
+
+    <style name="UnifiedTextAppearance" parent="@android:style/TextAppearance">
+        <item name="android:textSize">5sp</item>
+    </style>
+
+    <!-- EditText 전용 스타일 정의 -->
+    <style name="UnifiedTextAppearance.EditText" parent="@android:style/Widget.EditText">
+        <item name="android:textSize">5sp</item>
+    </style>
+
+</resources>
+

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/back_color"
+    android:orientation="vertical"
+    android:theme ="@style/TextColorTheme">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:background="@drawable/boarder_only_bottom_yellow">
+
+        <ImageButton
+            android:id="@+id/homeButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:padding="0dp"
+            android:layout_marginLeft="10dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/button_home_yellow" />
+        <!-- 좌측 여백 -->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/titleView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/noto_sans_kr_semibold"
+            android:textSize="20dp"
+            android:textColor="@color/activity_search_color"
+            android:text="Search" />
+        <!-- 우측 여백 -->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/searchViewButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:padding="0dp"
+            android:scaleType="centerCrop"
+            android:layout_marginRight="10dp"
+            app:srcCompat="@drawable/button_search_yellow" />
+
+
+
+    </LinearLayout>
+
+<LinearLayout
+    android:id="@+id/expandableLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="120dp"
+    android:gravity="center"
+    android:paddingLeft="2.5dp"
+
+    android:paddingBottom="10dp"
+    android:orientation="horizontal"
+    android:background="@drawable/boarder_only_bottom_yellow"
+    android:visibility="gone">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:textColor="@color/activity_search_color"
+                android:text="Number:" />
+
+            <EditText
+                android:id="@+id/problem_number"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textSize="14dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:hint="Number" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/activity_search_color"
+                android:text="Title:" />
+
+            <EditText
+                android:id="@+id/problem_title"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="15dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:hint="Title" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <TextView
+                android:id="@+id/level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Level:"
+                android:textColor="@color/activity_search_color"
+                android:layout_marginLeft="2dp"
+
+           />
+            <Spinner
+                android:id="@+id/problem_level"
+                android:layout_width="130dp"
+                android:layout_height="20dp"
+                android:gravity="right" />
+            <TextView
+                android:id="@+id/Algorithm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/activity_search_color"
+                android:text="Algorithm:" />
+            <Spinner
+                android:id="@+id/problem_tags"
+                android:layout_width="125dp"
+                android:layout_height="20dp"
+                android:gravity="right" />
+
+        </LinearLayout>
+
+</LinearLayout>
+
+    <Button
+        android:id="@+id/searchButton"
+        android:layout_width="43dp"
+        android:layout_height="70dp"
+        android:layout_gravity="center"
+        android:background="@drawable/button_search"
+        android:fontFamily="@font/noto_sans_kr"
+        android:gravity="center"
+        android:text="검색"
+        android:textSize="13dp" />
+
+
+</LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"/>
+</LinearLayout>

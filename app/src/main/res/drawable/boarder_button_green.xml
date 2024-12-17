@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- 배경 색상 (원하는 경우 지정, 불필요하면 생략 가능) -->
+    <solid android:color="@color/activity_list" />
+
+
+    <!-- 모서리 둥글게 처리하고 싶다면 radius 설정 -->
+    <corners android:radius="20dp" />
+
+    <!-- 버튼 패딩 설정 -->
+    <padding
+        android:left="8dp"
+        android:top="8dp"
+        android:right="8dp"
+        android:bottom="8dp" />
+
+</shape>

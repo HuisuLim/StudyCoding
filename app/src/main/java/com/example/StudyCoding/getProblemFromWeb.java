@@ -8,13 +8,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.view.ViewGroup;
 
-import com.example.StudyCoding.API.BrowseAIClient;
-import com.example.StudyCoding.API.BrowseAI_API;
-import com.example.StudyCoding.Database.TaskDatabase.TaskRepository;
+import com.example.StudyCoding.API.Client_BrowseAI;
+import com.example.StudyCoding.API.API_BrowseAI;
+import com.example.StudyCoding.Database.Database_Problem_Info.ProblemTaskRepository;
 import com.example.StudyCoding.Models.BrowseAIModels.RobotRetrievedResponse;
 import com.example.StudyCoding.Models.BrowseAIModels.RobotTaskRequest;
 import com.example.StudyCoding.Models.BrowseAIModels.RobotTaskResponse;
 import com.google.gson.Gson;
+
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import java.util.HashMap;
@@ -26,20 +28,21 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+/*
+public class getProblemFromWeb extends AppCompatActivity {
 
-public class getProblemFromWeb extends Fragment {
     private static final String TAG = "API_RESPONSE";
-    private TaskRepository repository;
+    private ProblemTaskRepository repository;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.web_viewer, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.web_viewer);  // 직접 레이아웃을 setContentView로 지정
 
-        repository = new TaskRepository(requireContext());
+        repository = new ProblemTaskRepository(this);
 
-        Button acceptButton2 = rootView.findViewById(R.id.acceptButton2);
-        EditText editTextNumber = rootView.findViewById(R.id.editTextNumber);
+        Button acceptButton2 = findViewById(R.id.acceptButton2);
+        EditText editTextNumber = findViewById(R.id.editTextNumber);
 
 
         acceptButton2.setOnClickListener(v -> {
@@ -61,7 +64,6 @@ public class getProblemFromWeb extends Fragment {
 
 
 
-        return rootView;
 
     }
 
@@ -70,7 +72,7 @@ public class getProblemFromWeb extends Fragment {
         inputParameters.put("originUrl", currentUrl);
 
         RobotTaskRequest request = new RobotTaskRequest(inputParameters);
-        BrowseAI_API service = BrowseAIClient.getRetrofitInstance().create(BrowseAI_API.class);
+        API_BrowseAI service = Client_BrowseAI.getRetrofitInstance().create(API_BrowseAI.class);
         String robotId = BuildConfig.BROWSEAI_ROBOT_ID;
 
         createTaskAndRetrieve(service, robotId, request);
@@ -78,7 +80,7 @@ public class getProblemFromWeb extends Fragment {
 
     }
 
-    private void createTaskAndRetrieve(BrowseAI_API service, String robotId, RobotTaskRequest request) {
+    private void createTaskAndRetrieve(API_BrowseAI service, String robotId, RobotTaskRequest request) {
         Call<ResponseBody> call = service.createTask(robotId, request);
 
         call.enqueue(new Callback<ResponseBody>() {
@@ -112,7 +114,7 @@ public class getProblemFromWeb extends Fragment {
 
 
 
-    private void pollTaskStatus(BrowseAI_API service, String robotId, String taskId) {
+    private void pollTaskStatus(API_BrowseAI service, String robotId, String taskId) {
         new Thread(() -> {
             boolean isCompleted = false;
 
@@ -148,7 +150,7 @@ public class getProblemFromWeb extends Fragment {
     }
 
     private void showAlert(String title, String message) {
-        new androidx.appcompat.app.AlertDialog.Builder(requireContext())
+        new androidx.appcompat.app.AlertDialog.Builder(this)
                 .setTitle(title)
                 .setMessage(message)
                 .setPositiveButton("OK", (dialog, which) -> dialog.dismiss())
@@ -156,7 +158,7 @@ public class getProblemFromWeb extends Fragment {
     }
     // 테스트용
     private void retrieveAndLogTaskDetails(String taskId) {
-        BrowseAI_API service = BrowseAIClient.getRetrofitInstance().create(BrowseAI_API.class);
+        API_BrowseAI service = Client_BrowseAI.getRetrofitInstance().create(API_BrowseAI.class);
         String robotId = BuildConfig.BROWSEAI_ROBOT_ID;
 
         Call<ResponseBody> call = service.retrieveTask(robotId, taskId);
@@ -196,6 +198,8 @@ public class getProblemFromWeb extends Fragment {
 
 }
 
+
+ */
 
 /*
 package com.example.StudyCoding;

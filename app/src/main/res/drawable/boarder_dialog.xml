@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 배경 색상 (원하는 경우 지정, 불필요하면 생략 가능) -->
+    <solid android:color="@color/edit_text_color" />
+
+
+    <!-- 모서리 둥글게 처리하고 싶다면 radius 설정 -->
+    <corners android:radius="15dp" />
+
+</shape>

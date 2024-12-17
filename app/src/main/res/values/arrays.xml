@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="levels_array">
+        <item>Select a level</item>
+        <item>Unrated / Not Ratable</item>
+        <item>Bronze V</item>
+        <item>Bronze IV</item>
+        <item>Bronze III</item>
+        <item>Bronze II</item>
+        <item>Bronze I</item>
+        <item>Silver V</item>
+        <item>Silver IV</item>
+        <item>Silver III</item>
+        <item>Silver II</item>
+        <item>Silver I</item>
+        <item>Gold V</item>
+        <item>Gold IV</item>
+        <item>Gold III</item>
+        <item>Gold II</item>
+        <item>Gold I</item>
+        <item>Platinum V</item>
+        <item>Platinum IV</item>
+        <item>Platinum III</item>
+        <item>Platinum II</item>
+        <item>Platinum I</item>
+        <item>Diamond V</item>
+        <item>Diamond IV</item>
+        <item>Diamond III</item>
+        <item>Diamond II</item>
+        <item>Diamond I</item>
+        <item>Ruby V</item>
+        <item>Ruby IV</item>
+        <item>Ruby III</item>
+        <item>Ruby II</item>
+        <item>Ruby I</item>
+    </string-array>
+</resources>

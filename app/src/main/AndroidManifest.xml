@@ -12,10 +12,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.CodeRunner"
+        android:theme="@style/Base.Theme.CodeRunner"
         tools:targetApi="31">
         <activity
-            android:name=".ListActivity"
+            android:name=".Activity_Main"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,8 +23,16 @@
             </intent-filter>
         </activity>
         <!-- 추가 액티비티들 -->
-        <activity android:name=".ViewSelectedProblemWithCode" android:exported="true" />
-        <activity android:name=".CodeExecuterActivity" android:exported="true"/>
+        <activity android:name=".Activity_ViewPager_SavedProblemWithCode" android:exported="true" />
+        <activity android:name=".Activity_Code_Executer" android:exported="true" />
+        <activity android:name=".Activity_Saved_List" android:exported="true" />
+        <activity android:name=".Activity_Search_Problem" android:exported="true" />
+        <activity android:name=".Activity_Web_Viewer" android:exported="true" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
     </application>
 
 </manifest>

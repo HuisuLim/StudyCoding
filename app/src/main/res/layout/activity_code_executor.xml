@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/back_color">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:background="@drawable/boarder_only_bottom_blue">
+
+            <ImageButton
+                android:id="@+id/homeButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="0dp"
+                android:layout_marginLeft="10dp"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/button_home_blue" />
+            <!-- 좌측 여백 -->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/titleView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/noto_sans_thin"
+                android:textSize="20dp"
+                android:textColor="@color/activity_code_executor"
+                android:text="CodeRunner" />
+            <!-- 우측 여백 -->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:id="@+id/searchButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="0dp"
+                android:scaleType="centerCrop"
+                android:layout_marginRight="10dp"
+                app:srcCompat="@drawable/button_search_blue"
+                android:visibility="invisible"/>
+        </LinearLayout>
+
+
+
+        <!-- Code Editor Layout -->
+        <de.markusressel.kodeeditor.library.view.CodeEditorLayout
+            android:id="@+id/codeEditorView"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            app:ke_divider_enabled="true"
+            app:ke_editor_backgroundColor="#dddddd"
+            app:ke_lineNumbers_backgroundColor="#cccccc"
+            app:ke_lineNumbers_textColor="#000000" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:theme="@style/TextColorTheme">
+
+            <TextView
+                android:id="@+id/languageTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:fontFamily="@font/noto_sans_kr"
+                android:text="Language" />
+
+            <Spinner
+                android:id="@+id/languageSpinner"
+                android:layout_width="256dp"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:spinnerMode="dropdown" />
+        </LinearLayout>
+        <!-- Your Input Section -->
+        <TextView
+            android:id="@+id/inputView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Your Input"
+            android:paddingLeft="15dp"
+            android:theme="@style/TextColorTheme"
+            android:fontFamily="@font/noto_sans_kr"/>
+
+        <EditText
+            android:id="@+id/yourInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="7dp"
+            android:background="@drawable/boarder_edit_text"
+            android:fontFamily="@font/noto_sans_kr_thin"
+            android:gravity="top|start"
+            android:hint="put your input"
+            android:inputType="textMultiLine"
+            android:padding="10dp"
+            android:textColorHint="@color/white"
+            android:textSize="14dp"
+            android:theme="@style/TextColorTheme"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"/>
+
+        <Button
+            android:theme="@style/TextColorTheme"
+            android:id="@+id/confirmButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/noto_sans_kr"
+            android:padding="3dp"
+            android:layout_marginRight="10dp"
+            android:text="submit"
+            android:layout_gravity="right"
+            android:background="@drawable/boarder_button"/>
+
+        <TextView
+            android:theme="@style/TextColorTheme"
+            android:fontFamily="@font/noto_sans_kr"
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:text="Your Output" />
+
+        <TextView
+            android:theme="@style/TextColorTheme"
+            android:id="@+id/outputTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/noto_sans_kr_thin"
+            android:text="your ourput"
+            android:paddingLeft="10dp"
+            android:layout_marginBottom="7dp"
+            android:background="@drawable/boarder_edit_text"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"/>
+
+        <Button
+            android:theme="@style/TextColorTheme"
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:fontFamily="@font/noto_sans_kr"
+            android:padding="3dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="right"
+            android:background="@drawable/boarder_button" />
+    </LinearLayout>
+
+</ScrollView>

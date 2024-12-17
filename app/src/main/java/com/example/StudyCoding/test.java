@@ -7,8 +7,8 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.StudyCoding.Database.CodeDatabase.CodeRepository;
-import com.example.StudyCoding.Database.CodeDatabase.CodeDatabaseHelper;
+import com.example.StudyCoding.Database.Database_Code.CodeDatabaseHelper;
+import com.example.StudyCoding.Database.Database_Code.CodeRepository;
 
 public class test extends AppCompatActivity {
 
@@ -18,29 +18,16 @@ public class test extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_list);
-
-
-
-
-
-
-
-
-
-
-
-
-
+        setContentView(R.layout.fragment_problem_list);
         // Context를 사용하여 CodeRepository 초기화
         codeRepository = new CodeRepository(this);
 
         // 전체 데이터를 출력하는 메서드 호출
-        //printAllCodeSubmissions();
+        printAllCodeSubmissions();
         //codeRepository.upsertCodeSubmission("https://www.acmicpc.net/problem/1006","hihi", 54);
         //printAllCodeSubmissions();
     }
-/*
+
     public void printAllCodeSubmissions() {
         // CodeRepository를 통해 getAllCodeSubmissions 호출
         Cursor cursor = codeRepository.getAllCodeSubmissions();
@@ -61,5 +48,4 @@ public class test extends AppCompatActivity {
         cursor.close();
     }
 
- */
 }

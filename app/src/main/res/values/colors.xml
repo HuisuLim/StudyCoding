@@ -2,4 +2,21 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="edit_text_color">#262625</color>
+    <color name="front_color">#40403e</color>
+    <color name="activity_code_executor">#007AFF</color>
+    <color name="quit_button_color">#FC3C2D</color>
+    <color name="activity_list">#00B050</color>
+    <color name="activity_search_color">#FFA00A</color>
+    <color name="back_color">#FF000000</color>
+    <color name="bronze_color">#CD7F32</color>
+    <color name="silver_color">#C0C0C0</color>
+    <color name="gold_color">#FFD700</color>
+    <color name="platinum_color">#E5E4E2</color>
+    <color name="diamond_color">#B9F2FF</color>
+    <color name="ruby_color">#E0115F</color>
+        <!-- 필요에 따라 수정 -->
+    <color name="default_color">#000000</color>
+
+
 </resources>
