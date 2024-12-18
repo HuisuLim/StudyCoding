@@ -2,41 +2,24 @@ package com.example.StudyCoding.Fragment.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.StudyCoding.API.API_BrowseAI;
-import com.example.StudyCoding.API.Client_BrowseAI;
 import com.example.StudyCoding.Activity_Web_Viewer;
-import com.example.StudyCoding.BuildConfig;
 import com.example.StudyCoding.Database.Database_Problem.Problem;
 import com.example.StudyCoding.Database.Database_Problem_Info.ProblemTaskRepository;
-import com.example.StudyCoding.Models.BrowseAIModels.RobotRetrievedResponse;
-import com.example.StudyCoding.Models.BrowseAIModels.RobotTaskRequest;
-import com.example.StudyCoding.Models.BrowseAIModels.RobotTaskResponse;
 import com.example.StudyCoding.R;
-import com.google.gson.Gson;
 
-import java.util.HashMap;
 import java.util.List;
-
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class Adpater_Search_Problem extends RecyclerView.Adapter<Adpater_Search_Problem.ProblemViewHolder> {
 

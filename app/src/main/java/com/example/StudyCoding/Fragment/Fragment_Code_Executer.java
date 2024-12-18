@@ -2,9 +2,6 @@ package com.example.StudyCoding.Fragment;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,10 +25,11 @@ import com.example.StudyCoding.Database.Database_Code.CodeRepository;
 import com.example.StudyCoding.Database.Database_Code.CodeTask;
 import com.example.StudyCoding.LanguageRuleBook.ControlKeywordRule;
 import com.example.StudyCoding.LanguageRuleBook.CustomLanguageRuleBook;
+import com.example.StudyCoding.LanguageRuleBook.IOKeywordRule;
 import com.example.StudyCoding.LanguageRuleBook.TypeKeywordRule;
-import com.example.StudyCoding.Models.Judge0Models.SubmissionLanguage;
-import com.example.StudyCoding.Models.Judge0Models.SubmissionRequest;
-import com.example.StudyCoding.Models.Judge0Models.SubmissionResponse;
+import com.example.StudyCoding.API.APIModels.Judge0Models.SubmissionLanguage;
+import com.example.StudyCoding.API.APIModels.Judge0Models.SubmissionRequest;
+import com.example.StudyCoding.API.APIModels.Judge0Models.SubmissionResponse;
 import com.example.StudyCoding.API.Client_Judge0;
 import com.example.StudyCoding.R;
 
@@ -40,8 +38,7 @@ import java.util.List;
 
 import de.markusressel.kodeeditor.library.view.CodeEditorLayout;
 import de.markusressel.kodehighlighter.core.LanguageRuleBook;
-import io.github.kbiakov.codeview.CodeView;
-import io.github.kbiakov.codeview.classifier.CodeProcessor;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -51,7 +48,6 @@ public class Fragment_Code_Executer extends Fragment {
     private static final String TAG = "Judge0";
     private API_Judge0 api;
 
-    private CodeView codeView;
     private EditText input;
     private TextView outputTextView;
     private Button confirmButton;
@@ -67,8 +63,7 @@ public class Fragment_Code_Executer extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        CodeProcessor.init(requireContext());
-        View rootView = inflater.inflate(R.layout.activity_code_executor, container, false);
+        View rootView = inflater.inflate(R.layout.activity_code_runner, container, false);
         String url = getArguments().getString("url");
         repository = new CodeRepository(requireContext());
         codeTask = new CodeTask(requireContext());
@@ -92,7 +87,8 @@ public class Fragment_Code_Executer extends Fragment {
         codeEditorLayout = rootView.findViewById(R.id.codeEditorView);
         LanguageRuleBook languageRuleBook2 = new CustomLanguageRuleBook(
                 new TypeKeywordRule(),
-                new ControlKeywordRule()
+                new ControlKeywordRule(),
+                new IOKeywordRule()
         );
         codeEditorLayout.setLanguageRuleBook(languageRuleBook2);
         // URL 데이터를 기반으로 Code와 Spinner 초기화
@@ -225,22 +221,6 @@ public class Fragment_Code_Executer extends Fragment {
             }
         });
     }
-
-    private final TextWatcher textWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            String escapedCode = TextUtils.htmlEncode(s.toString());
-            codeView.setCode(escapedCode);
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-        }
-    };
 
 
     private void initializeCodeInput(String url) {

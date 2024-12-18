@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,7 +19,7 @@ import com.example.StudyCoding.R;
 
 import java.util.List;
 
-public class Adapter_Saved_List2 extends RecyclerView.Adapter<Adapter_Saved_List2.CodeTaskViewHolder> {
+public class Adapter_Saved_List_Only_Code extends RecyclerView.Adapter<Adapter_Saved_List_Only_Code.CodeTaskViewHolder> {
 
     private final List<CodeTask> codeTasks;
     private final OnTaskClickListener listener;
@@ -31,7 +30,7 @@ public class Adapter_Saved_List2 extends RecyclerView.Adapter<Adapter_Saved_List
     }
 
 
-    public Adapter_Saved_List2(Context context, List<CodeTask> codeTasks, OnTaskClickListener listener) {
+    public Adapter_Saved_List_Only_Code(Context context, List<CodeTask> codeTasks, OnTaskClickListener listener) {
         this.context = context; // context 초기화
         this.codeTasks = codeTasks;
         this.listener = listener;
@@ -47,7 +46,7 @@ public class Adapter_Saved_List2 extends RecyclerView.Adapter<Adapter_Saved_List
 
 
     @Override
-    public void onBindViewHolder(@NonNull Adapter_Saved_List2.CodeTaskViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull Adapter_Saved_List_Only_Code.CodeTaskViewHolder holder, int position) {
         CodeTask task = codeTasks.get(position);
         String extractedPrefix = removePrefix(task.getUrl());
         holder.titleTextView.setText(extractedPrefix);

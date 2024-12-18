@@ -1,4 +1,4 @@
-package com.example.StudyCoding.Models.SolvedACModels;
+package com.example.StudyCoding.API.APIModels.SolvedACModels;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import com.example.StudyCoding.API.API_SolvedAC;
 import com.example.StudyCoding.Database.Database_Problem.ProblemRepository;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,14 +25,28 @@ public class TestForSolvedAC extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ProblemManager problemManager = new ProblemManager(this);
+
+        // 배치 작업 실행
+        problemManager.fetchAndSaveProblemsBatch(1000, 32940, 10000);
+
+        // 데이터 출력
+        ProblemRepository repository = new ProblemRepository(this);
+        repository.printAllProblems();
+    }
+}
+
+
+/*
+public class TestForSolvedAC extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         // API 서비스 초기화
         ApiService apiService = new ApiService(this);
-
-        // 다중 문제 ID 요청 테스트
-        //List<Integer> problemIds = Arrays.asList(1005,1006); // 예제 문제 ID
-        // apiService.fetchAndSaveProblems(problemIds);
-        // 저장된 데이터 Logcat에 출력
-        //apiService.fetchAndSaveProblemsBatch(1000, 32940, 50);
+        apiService.fetchAndSaveProblemsBatch(1000, 32940, 50);
         ProblemRepository repository = new ProblemRepository(this);
         repository.printAllProblems();
     }
@@ -51,6 +66,16 @@ public class TestForSolvedAC extends AppCompatActivity {
         }
 
         public void fetchAndSaveProblems(List<Integer> problemIds) {
+            // 데이터베이스에서 없는 문제만 필터링
+            List<Integer> newProblemIds = problemIds.stream()
+                    .filter(problemId -> !repository.isProblemExists(problemId))
+                    .collect(Collectors.toList());
+
+            if (newProblemIds.isEmpty()) {
+                Log.d("ApiService", "No new problems to fetch.");
+                return; // 새로 가져올 문제 없음
+            }
+
             // 문제 번호 목록을 쉼표로 구분된 문자열로 변환
             String problemIdsParam = problemIds.stream()
                     .map(String::valueOf)
@@ -140,3 +165,5 @@ public class TestForSolvedAC extends AppCompatActivity {
 
     }
 }
+
+ */

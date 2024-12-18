@@ -2,12 +2,14 @@ package com.example.StudyCoding;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.StudyCoding.API.APIModels.SolvedACModels.ProblemManager;
+import com.example.StudyCoding.Database.Database_Problem.ProblemRepository;
 
 public class Activity_Main extends AppCompatActivity {
 
@@ -17,6 +19,19 @@ public class Activity_Main extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main); // 레이아웃 파일 이름 확인
+        // 문제 매니저 초기화 및 배치 작업 실행
+        ProblemManager problemManager = new ProblemManager(this);
+
+        // API 호출을 백그라운드 스레드에서 실행
+        new Thread(() -> {
+            problemManager.fetchAndSaveProblemsBatch(1000, 32930 , 50);
+
+            // 데이터 출력 (옵션)
+            ProblemRepository repository = new ProblemRepository(this);
+            repository.printAllProblems();
+        }).start();
+
+        Log.d("MyApplication", "App started, problem fetch initiated.");
 
         // 커스텀 ImageButton 초기화
         codeButton = findViewById(R.id.codeButton);
@@ -26,7 +41,7 @@ public class Activity_Main extends AppCompatActivity {
 
         // 클릭 리스너 설정
         codeButton.setOnClickListener(v -> {
-            Intent intent = new Intent(Activity_Main.this, Activity_Code_Executer.class);
+            Intent intent = new Intent(Activity_Main.this, Activity_Code_Runner.class);
             startActivity(intent);
         });
 

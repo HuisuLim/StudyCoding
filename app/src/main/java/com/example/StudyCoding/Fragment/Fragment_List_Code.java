@@ -12,19 +12,19 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.StudyCoding.Activity_Code_Executer;
+import com.example.StudyCoding.Activity_Code_Runner;
 import com.example.StudyCoding.Database.Database_Code.CodeTask;
 import com.example.StudyCoding.R;
-import com.example.StudyCoding.Fragment.Adapter.Adapter_Saved_List2;
+import com.example.StudyCoding.Fragment.Adapter.Adapter_Saved_List_Only_Code;
 import com.example.StudyCoding.Fragment.Adapter.Decoration_SpacingItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Fragment_List_Code extends Fragment implements Adapter_Saved_List2.OnTaskClickListener {
+public class Fragment_List_Code extends Fragment implements Adapter_Saved_List_Only_Code.OnTaskClickListener {
 
     private RecyclerView recyclerView;
-    private Adapter_Saved_List2 adapter;
+    private Adapter_Saved_List_Only_Code adapter;
     private List<CodeTask> codeTaskList;
 
     @Nullable
@@ -41,7 +41,7 @@ public class Fragment_List_Code extends Fragment implements Adapter_Saved_List2.
 
         loadTasks();
 
-        adapter = new Adapter_Saved_List2(requireContext(), codeTaskList, this);
+        adapter = new Adapter_Saved_List_Only_Code(requireContext(), codeTaskList, this);
         recyclerView.setAdapter(adapter);
 
         return view;
@@ -66,7 +66,7 @@ public class Fragment_List_Code extends Fragment implements Adapter_Saved_List2.
 
     @Override
     public void onTaskClick(String url) {
-        Intent intent = new Intent(requireContext(), Activity_Code_Executer.class);
+        Intent intent = new Intent(requireContext(), Activity_Code_Runner.class);
         intent.putExtra("url", url);
         startActivity(intent);
     }

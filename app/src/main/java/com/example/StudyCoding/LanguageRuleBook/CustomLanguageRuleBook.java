@@ -20,12 +20,13 @@ public class CustomLanguageRuleBook implements LanguageRuleBook {
     private final Set<LanguageRule> languageRuleSet;
     private final ColorScheme colorScheme;
 
-    public CustomLanguageRuleBook(LanguageRule typeKeywordRule, LanguageRule controlKeywordRule) {
+    public CustomLanguageRuleBook(LanguageRule typeKeywordRule, LanguageRule controlKeywordRule, LanguageRule ioKeywordRule) {
         this.languageRuleSet = new HashSet<LanguageRule>() {{
             add(typeKeywordRule);
             add(controlKeywordRule);
+            add(ioKeywordRule);
         }};
-        this.colorScheme = new CustomColorScheme(typeKeywordRule, controlKeywordRule);
+        this.colorScheme = new CustomColorScheme(typeKeywordRule, controlKeywordRule, ioKeywordRule);
     }
 
     @NonNull

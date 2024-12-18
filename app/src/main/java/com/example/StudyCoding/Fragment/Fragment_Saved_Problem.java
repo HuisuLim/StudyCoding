@@ -1,6 +1,5 @@
 package com.example.StudyCoding.Fragment;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -20,7 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.StudyCoding.Database.Database_Problem_Info.ProblemTaskRepository;
-import com.example.StudyCoding.Models.BrowseAIModels.RobotRetrievedResponse;
+import com.example.StudyCoding.API.APIModels.BrowseAIModels.RobotRetrievedResponse;
 import com.example.StudyCoding.R;
 
 import java.util.ArrayList;

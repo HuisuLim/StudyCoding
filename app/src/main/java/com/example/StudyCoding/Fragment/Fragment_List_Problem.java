@@ -17,15 +17,15 @@ import com.example.StudyCoding.Database.Database_Problem_Info.ProblemTaskReposit
 import com.example.StudyCoding.Activity_ViewPager_SavedProblemWithCode;
 import com.example.StudyCoding.R;
 import com.example.StudyCoding.Fragment.Adapter.Decoration_SpacingItem;
-import com.example.StudyCoding.Fragment.Adapter.Adapter_Saved_List;
+import com.example.StudyCoding.Fragment.Adapter.Adapter_Saved_List_Problem;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Fragment_List_Problem extends Fragment implements Adapter_Saved_List.OnTaskClickListener  {
+public class Fragment_List_Problem extends Fragment implements Adapter_Saved_List_Problem.OnTaskClickListener  {
 
     private RecyclerView recyclerView;
-    private Adapter_Saved_List adapter;
+    private Adapter_Saved_List_Problem adapter;
     private List<ProblemTask> problemTaskList;
 
     @Nullable
@@ -41,7 +41,7 @@ public class Fragment_List_Problem extends Fragment implements Adapter_Saved_Lis
 
         loadTasks();
 
-        adapter = new Adapter_Saved_List(requireContext(), problemTaskList, this);
+        adapter = new Adapter_Saved_List_Problem(requireContext(), problemTaskList, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setAdapter(adapter);
 

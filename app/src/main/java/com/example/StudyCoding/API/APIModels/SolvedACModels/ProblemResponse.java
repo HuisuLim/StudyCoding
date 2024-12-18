@@ -1,4 +1,4 @@
-package com.example.StudyCoding.Models.SolvedACModels;
+package com.example.StudyCoding.API.APIModels.SolvedACModels;
 
 import com.google.gson.annotations.SerializedName;
 import java.util.List;

@@ -24,7 +24,7 @@
         </activity>
         <!-- 추가 액티비티들 -->
         <activity android:name=".Activity_ViewPager_SavedProblemWithCode" android:exported="true" />
-        <activity android:name=".Activity_Code_Executer" android:exported="true" />
+        <activity android:name=".Activity_Code_Runner" android:exported="true" />
         <activity android:name=".Activity_Saved_List" android:exported="true" />
         <activity android:name=".Activity_Search_Problem" android:exported="true" />
         <activity android:name=".Activity_Web_Viewer" android:exported="true" />

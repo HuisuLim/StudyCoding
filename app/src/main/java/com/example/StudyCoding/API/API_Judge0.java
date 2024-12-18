@@ -1,8 +1,8 @@
 package com.example.StudyCoding.API;
 
-import com.example.StudyCoding.Models.Judge0Models.SubmissionLanguage;
-import com.example.StudyCoding.Models.Judge0Models.SubmissionRequest;
-import com.example.StudyCoding.Models.Judge0Models.SubmissionResponse;
+import com.example.StudyCoding.API.APIModels.Judge0Models.SubmissionLanguage;
+import com.example.StudyCoding.API.APIModels.Judge0Models.SubmissionRequest;
+import com.example.StudyCoding.API.APIModels.Judge0Models.SubmissionResponse;
 
 import java.util.List;
 

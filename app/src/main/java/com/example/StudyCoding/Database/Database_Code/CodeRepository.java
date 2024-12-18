@@ -1,6 +1,5 @@
 package com.example.StudyCoding.Database.Database_Code;
 
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -86,12 +85,12 @@ public class CodeRepository {
     public Cursor getAllCodeSubmissions() {
         return db.query(
                 CodeDatabaseHelper.TABLE_NAME,
-                null, // 모든 열 선택
-                null, // 조건 없음
-                null, // 조건 값 없음
-                null, // 그룹화 없음
-                null, // 필터링 없음
-                null  // 정렬 없음
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
         );
     }
     public Cursor getMissingUrlCodeSubmissions() {

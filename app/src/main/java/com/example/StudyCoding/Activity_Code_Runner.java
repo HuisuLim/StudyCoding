@@ -23,10 +23,11 @@ import com.example.StudyCoding.Database.Database_Code.CodeRepository;
 import com.example.StudyCoding.Database.Database_Code.CodeTask;
 import com.example.StudyCoding.LanguageRuleBook.ControlKeywordRule;
 import com.example.StudyCoding.LanguageRuleBook.CustomLanguageRuleBook;
+import com.example.StudyCoding.LanguageRuleBook.IOKeywordRule;
 import com.example.StudyCoding.LanguageRuleBook.TypeKeywordRule;
-import com.example.StudyCoding.Models.Judge0Models.SubmissionLanguage;
-import com.example.StudyCoding.Models.Judge0Models.SubmissionRequest;
-import com.example.StudyCoding.Models.Judge0Models.SubmissionResponse;
+import com.example.StudyCoding.API.APIModels.Judge0Models.SubmissionLanguage;
+import com.example.StudyCoding.API.APIModels.Judge0Models.SubmissionRequest;
+import com.example.StudyCoding.API.APIModels.Judge0Models.SubmissionResponse;
 import com.example.StudyCoding.API.Client_Judge0;
 
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Activity_Code_Executer extends AppCompatActivity {
+public class Activity_Code_Runner extends AppCompatActivity {
     private static final String TAG = "Judge0";
     private API_Judge0 api;
 
@@ -59,7 +60,7 @@ public class Activity_Code_Executer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         CodeProcessor.init(this);
-        setContentView(R.layout.activity_code_executor);
+        setContentView(R.layout.activity_code_runner);
 
         repository = new CodeRepository(this);
         codeTask = new CodeTask(this);
@@ -82,7 +83,8 @@ public class Activity_Code_Executer extends AppCompatActivity {
         codeEditorLayout = findViewById(R.id.codeEditorView);
         LanguageRuleBook languageRuleBook2 = new CustomLanguageRuleBook(
                 new TypeKeywordRule(),
-                new ControlKeywordRule()
+                new ControlKeywordRule(),
+                new IOKeywordRule()
         );
         codeEditorLayout.setLanguageRuleBook(languageRuleBook2);
         initializeCodeInput(url);
@@ -91,7 +93,7 @@ public class Activity_Code_Executer extends AppCompatActivity {
                 // URL이 repository에 존재하면 바로 upsert
                 String userCode = codeEditorLayout.getText().toString().trim();
                 repository.upsertCodeSubmission(url, userCode, selectedLanguageId);
-                Toast.makeText(Activity_Code_Executer.this, "Code updated successfully for URL: " + url, Toast.LENGTH_SHORT).show();
+                Toast.makeText(Activity_Code_Runner.this, "Code updated successfully for URL: " + url, Toast.LENGTH_SHORT).show();
             } else {
                 // 기존 로직 유지
                 showCustomSaveDialog();
@@ -180,14 +182,14 @@ public class Activity_Code_Executer extends AppCompatActivity {
                     initializeSpinner(url);
                 } else {
                     Log.e(TAG, "Failed to load languages. Error code: " + response.code());
-                    Toast.makeText(Activity_Code_Executer.this, "Failed to load languages", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Activity_Code_Runner.this, "Failed to load languages", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<SubmissionLanguage>> call, Throwable t) {
                 Log.e(TAG, "Error Fetching Languages: " + t.getMessage());
-                Toast.makeText(Activity_Code_Executer.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(Activity_Code_Runner.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

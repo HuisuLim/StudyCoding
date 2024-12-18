@@ -1,13 +1,10 @@
 package com.example.StudyCoding;
 
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,9 +25,9 @@ import com.example.StudyCoding.Database.Database_Problem.ProblemRepository;
 import com.example.StudyCoding.Database.Database_Problem_Info.ProblemTaskRepository;
 import com.example.StudyCoding.Fragment.Adapter.Adpater_Search_Problem;
 import com.example.StudyCoding.Fragment.Adapter.Decoration_SpacingItem;
-import com.example.StudyCoding.Models.BrowseAIModels.RobotRetrievedResponse;
-import com.example.StudyCoding.Models.BrowseAIModels.RobotTaskRequest;
-import com.example.StudyCoding.Models.BrowseAIModels.RobotTaskResponse;
+import com.example.StudyCoding.API.APIModels.BrowseAIModels.RobotRetrievedResponse;
+import com.example.StudyCoding.API.APIModels.BrowseAIModels.RobotTaskRequest;
+import com.example.StudyCoding.API.APIModels.BrowseAIModels.RobotTaskResponse;
 import com.google.gson.Gson;
 
 import java.util.HashMap;

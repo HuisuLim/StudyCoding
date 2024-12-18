@@ -1,4 +1,4 @@
-package com.example.StudyCoding.Models.BrowseAIModels;
+package com.example.StudyCoding.API.APIModels.BrowseAIModels;
 
 import java.util.Map;
 public class RobotRetrievedResponse {

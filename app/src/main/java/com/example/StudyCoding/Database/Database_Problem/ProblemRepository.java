@@ -78,6 +78,8 @@ public class ProblemRepository {
         db.close();
     }
 
+
+
     public List<Problem> getAllProblems() {
         List<Problem> problemList = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -137,6 +139,23 @@ public class ProblemRepository {
 
         return tags;
     }
+
+    // 문제 존재 여부 확인
+    public boolean isProblemExists(int problemId) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String query = "SELECT 1 FROM " + ProblemDatabaseHelper.TABLE_NAME +
+                " WHERE " + ProblemDatabaseHelper.COLUMN_PROBLEM_ID + " = ?";
+
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(problemId)});
+        boolean exists = cursor.moveToFirst(); // 결과가 있으면 true, 없으면 false
+
+        cursor.close();
+        db.close();
+
+        return exists;
+    }
+
     public List<Problem> searchProblems(String number, String title, String levelName, String tag) {
         List<Problem> results = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();

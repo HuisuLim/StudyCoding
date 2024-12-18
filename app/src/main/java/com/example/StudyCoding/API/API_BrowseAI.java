@@ -1,6 +1,6 @@
 package com.example.StudyCoding.API;
 
-import com.example.StudyCoding.Models.BrowseAIModels.RobotTaskRequest;
+import com.example.StudyCoding.API.APIModels.BrowseAIModels.RobotTaskRequest;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;

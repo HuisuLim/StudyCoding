@@ -1,6 +1,6 @@
 package com.example.StudyCoding.API;
 
-import com.example.StudyCoding.Models.SolvedACModels.ProblemResponse;
+import com.example.StudyCoding.API.APIModels.SolvedACModels.ProblemResponse;
 
 import java.util.List;
 

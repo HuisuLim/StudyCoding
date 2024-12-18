@@ -1,4 +1,4 @@
-package com.example.StudyCoding.Models.Judge0Models;
+package com.example.StudyCoding.API.APIModels.Judge0Models;
 
 public class SubmissionLanguage {
     private int id;

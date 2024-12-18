@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.StudyCoding.Models.BrowseAIModels.RobotRetrievedResponse;
+import com.example.StudyCoding.API.APIModels.BrowseAIModels.RobotRetrievedResponse;
 
 import java.util.ArrayList;
 import java.util.HashMap;

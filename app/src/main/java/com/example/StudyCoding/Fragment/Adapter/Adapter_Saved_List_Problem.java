@@ -19,7 +19,7 @@ import com.example.StudyCoding.R;
 
 import java.util.List;
 
-public class Adapter_Saved_List extends RecyclerView.Adapter<Adapter_Saved_List.TaskViewHolder> {
+public class Adapter_Saved_List_Problem extends RecyclerView.Adapter<Adapter_Saved_List_Problem.TaskViewHolder> {
 
     private Context context;
     private List<ProblemTask> problemTaskList;
@@ -29,7 +29,7 @@ public class Adapter_Saved_List extends RecyclerView.Adapter<Adapter_Saved_List.
         void onTaskClick(String url);
     }
 
-    public Adapter_Saved_List(Context context, List<ProblemTask> problemTaskList, OnTaskClickListener listener) {
+    public Adapter_Saved_List_Problem(Context context, List<ProblemTask> problemTaskList, OnTaskClickListener listener) {
         this.context = context;
         this.problemTaskList = problemTaskList;
         this.listener = listener;
