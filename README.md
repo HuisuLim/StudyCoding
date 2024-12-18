@@ -1,8 +1,12 @@
 # Study Coing
-- 2024.11.30: 레이아웃 간단히 구현
-- 2024.12.04: Judge0 API연동, README 진행사항 추가
-- 2024.12.05: Judge0 API 요청 응답 구현
-- 2024.12.08: BrowseAI_API 연동 및 요청 응답 구현
-              문제 번호 입력 후 버튼을 누르면 post method 호출 및
-              문제정보 Retrieve하여 Database에 저장할 수 있게 구현
 <img width="217" alt="image" src="https://github.com/user-attachments/assets/ef002693-dea3-4982-921d-15d25a2afb68" />
+## 주제
+코딩 공부 앱
+
+- 컴퓨터를 공부한다면 알고리즘 공부는 필수적입니다.
+모바일 환경에서도 코드를 실행시켜보고 
+문제도 풀어보며, 
+자신이 푼 문제와 코드를 관리하는
+앱을 만들고자 하였습니다.
+
+
