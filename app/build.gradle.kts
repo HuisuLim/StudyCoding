@@ -79,8 +79,6 @@ dependencies {
     implementation("com.github.markusressel:KodeEditor:v4.0.1")
     implementation("com.otaliastudios:zoomlayout:1.9.0")
     implementation("com.github.markusressel.KodeHighlighter:core:v4.0.3")
-
-
 }
 
 

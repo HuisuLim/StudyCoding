@@ -47,7 +47,7 @@ public class Activity_Code_Executer extends AppCompatActivity {
     private CodeEditorLayout codeEditorLayout;
     private TextView outputTextView;
     private Button confirmButton;
-    private Button saveButton;
+    private Button saveButtonMain;
     private ImageButton homeButton;
     private Spinner languageSpinner;
     private CodeTask codeTask;
@@ -71,7 +71,7 @@ public class Activity_Code_Executer extends AppCompatActivity {
         outputTextView = findViewById(R.id.outputTextView);
         languageSpinner = findViewById(R.id.languageSpinner);
         confirmButton = findViewById(R.id.confirmButton);
-        saveButton = findViewById(R.id.saveButton);
+        saveButtonMain = findViewById(R.id.saveButton);
         homeButton = findViewById(R.id.homeButton);
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,9 +86,18 @@ public class Activity_Code_Executer extends AppCompatActivity {
         );
         codeEditorLayout.setLanguageRuleBook(languageRuleBook2);
         initializeCodeInput(url);
-        saveButton.setOnClickListener(v -> {
-            showCustomSaveDialog();
+        saveButtonMain.setOnClickListener(v -> {
+            if (url != null) {
+                // URL이 repository에 존재하면 바로 upsert
+                String userCode = codeEditorLayout.getText().toString().trim();
+                repository.upsertCodeSubmission(url, userCode, selectedLanguageId);
+                Toast.makeText(Activity_Code_Executer.this, "Code updated successfully for URL: " + url, Toast.LENGTH_SHORT).show();
+            } else {
+                // 기존 로직 유지
+                showCustomSaveDialog();
+            }
         });
+
         /*
         saveButton.setOnClickListener(v -> {
             if (url != null) {
@@ -156,7 +165,7 @@ public class Activity_Code_Executer extends AppCompatActivity {
             Log.d(TAG, "Button Clicked. User Code: " + userCode);
             Log.d(TAG, "User Input: " + userInput);
             Log.d(TAG, "Selected Language ID: " + selectedLanguageId);
-            createSubmission(userCode, selectedLanguageId, userInput, "100");
+            createSubmission(userCode, selectedLanguageId, userInput, null);
         });
     }
 

@@ -28,14 +28,14 @@
            android:layout_width="170dp"
            android:layout_height="170dp"
            android:background="@drawable/boarder_button"
-           android:padding="2dp"
+           android:padding="5dp"
            android:layout_marginRight="15dp"
            android:scaleType="centerCrop"
            app:srcCompat="@drawable/button_main_coding" />
        <ImageButton
            android:id="@+id/searchButton"
            android:scaleType="centerCrop"
-           android:padding="2dp"
+           android:padding="5dp"
            android:layout_width="170dp"
            android:layout_height="170dp"
            app:srcCompat="@drawable/button_main_search"
