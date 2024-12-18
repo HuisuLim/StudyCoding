@@ -5,3 +5,4 @@
 - 2024.12.08: BrowseAI_API 연동 및 요청 응답 구현
               문제 번호 입력 후 버튼을 누르면 post method 호출 및
               문제정보 Retrieve하여 Database에 저장할 수 있게 구현
+<img width="217" alt="image" src="https://github.com/user-attachments/assets/ef002693-dea3-4982-921d-15d25a2afb68" />
